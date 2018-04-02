@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +21,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.peng.one.push.OnePush;
+import com.peng.one.push.utils.JsonUtils;
+
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.OnNeverAskAgain;
@@ -34,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private static final String PUSH_DATA = "PUSH_DATA";
     private static final String ACTION_LOG = "com.peng.one.push.ACTION_LOG";
+
 
     private TextView tvLog;
 
@@ -95,9 +107,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.btn_register_push:
                 OnePush.register();
-                Intent intent = new Intent(this,WebViewActivity.class);
-                intent.putExtra("url","https://blog.csdn.net/kkkkkxiaofei/article/details/41483039");
-                startActivity(intent);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        httpUrlConnGet();
+                    }
+                }).start();
                 break;
             case R.id.btn_unregister_push:
                 OnePush.unRegister();
@@ -202,5 +217,69 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // NOTE: delegate the permission handling to generated method
         MainActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
     }
+
+
+    public void httpUrlConnGet(){
+        HttpURLConnection urlConnection = null;
+        URL url = null;
+        try {
+            String urlStr = "http://www.27305.com/frontApi/getAboutUs?appid=12171601";
+            url = new URL(urlStr);
+            urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.connect();
+            if(urlConnection.getResponseCode()==HttpURLConnection.HTTP_OK){
+                InputStream in = urlConnection.getInputStream();
+                BufferedReader br = new BufferedReader(new InputStreamReader(in));
+                String line = null;
+                StringBuffer buffer = new StringBuffer();
+                while((line=br.readLine())!=null){
+                    buffer.append(line);
+                }
+                in.close();
+                br.close();
+                String res = buffer.toString();
+                JSONObject jsonObject = new JSONObject(res);
+                Result result = new Result();
+                result.setAppid(jsonObject.getString("appid"));
+                result.setAppname(jsonObject.getString("appname"));
+                result.setIsshowwap(jsonObject.getString("isshowwap"));
+                result.setWapurl(jsonObject.getString("wapurl"));
+                result.setStatus(jsonObject.getString("status"));
+                result.setDesc(jsonObject.getString("desc"));
+                if(result.getStatus().equals("1")){
+                    mHandler.sendEmptyMessage(0);
+                    Message msg = new Message();
+                    msg.obj = result;
+                    mHandler.handleMessage(msg);
+                }else{
+                    mHandler.sendEmptyMessage(1);
+                }
+            }else{
+                mHandler.sendEmptyMessage(2);
+            }
+        } catch (Exception e) {
+            mHandler.sendEmptyMessage(3);
+        }finally{
+            urlConnection.disconnect();
+        }
+    }
+
+    Handler mHandler = new Handler() {
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 0:
+                    //完成主界面更新,拿到数据
+                    String data = (String) msg.obj;
+
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+
 }
 
