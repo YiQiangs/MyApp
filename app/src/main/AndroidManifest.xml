@@ -3,10 +3,10 @@
     package="com.yiqiang.myapp">
 
     <application
+        android:name=".PushApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
@@ -16,6 +16,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".WebViewActivity"
+            />
 
         <receiver android:name="com.yiqiang.myapp.MyPushReceiver">
             <intent-filter>
@@ -34,7 +36,7 @@
             android:value="developer"/>
         <meta-data
             android:name="JPUSH_APPKEY"
-            android:value="ef2cbbe8bf83f1b335846f3e"/>
+            android:value="b79b05debf2f19b6237ff537"/>
     </application>
 
 </manifest>

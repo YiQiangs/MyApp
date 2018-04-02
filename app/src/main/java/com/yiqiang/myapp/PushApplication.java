@@ -25,21 +25,25 @@ public class PushApplication extends Application {
         String currentProcessName = getCurrentProcessName();
         //只在主进程中注册(注意：umeng推送，除了在主进程中注册，还需要在channel中注册)
         if (BuildConfig.APPLICATION_ID.equals(currentProcessName) || BuildConfig.APPLICATION_ID.concat(":channel").equals(currentProcessName)) {
+            //platformCode和platformName就是在<meta/>标签中，对应的"平台标识码"和平台名称
             OnePush.init(this, ((platformCode, platformName) -> {
-                //platformCode和platformName就是在<meta/>标签中，对应的"平台标识码"和平台名称
+                boolean result = false;
                 if (RomUtils.isMiuiRom()) {
-                    return platformCode == 101;
+                    result=  platformCode == 101;
                 } else if (RomUtils.isHuaweiRom()) {
-                    return platformCode == 102;
-                } else if (RomUtils.isFlymeRom()) {
-                    return platformCode == 105;
-                }else {
-                    return platformCode == 104;
+                    result= platformCode == 107;
+                } else if(RomUtils.isFlymeRom()){
+                    result = platformCode == 103;
+                } else {
+                    result= platformCode == 106;
                 }
+                Log.i(TAG, "Register-> code: "+platformCode+" name: "+platformName+" result: "+result);
+                return result;
+//                return platformCode == 101;
             }));
             OnePush.register();
         }
-      Log.i(TAG, "onCreate: isFlymeRom:"+RomUtils.isFlymeRom());
+        Log.i(TAG, "onCreate: isFlymeRom:"+RomUtils.isFlymeRom());
     }
 
     /**
