@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.yiqiang.myapp">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <receiver android:name="com.yiqiang.myapp.MyPushReceiver">
+            <intent-filter>
+                <action android:name="com.peng.one.push.ACTION_RECEIVE_NOTIFICATION" />
+                <action android:name="com.peng.one.push.ACTION_RECEIVE_NOTIFICATION_CLICK" />
+                <action android:name="com.peng.one.push.ACTION_RECEIVE_MESSAGE" />
+                <action android:name="com.peng.one.push.ACTION_RECEIVE_COMMAND_RESULT" />
+            </intent-filter>
+        </receiver>
+        <!--引入了one-push-库-->
+        <meta-data
+            android:name="OnePush_JPush_106"
+            android:value="com.peng.one.push.jpush.JPushClient"/>
+        <meta-data
+            android:name="JPUSH_CHANNEL"
+            android:value="developer"/>
+        <meta-data
+            android:name="JPUSH_APPKEY"
+            android:value="ef2cbbe8bf83f1b335846f3e"/>
+    </application>
+
+</manifest>
