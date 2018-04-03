@@ -272,8 +272,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             switch (msg.what) {
                 case 0:
                     //完成主界面更新,拿到数据
-                    String data = (String) msg.obj;
-
+                    Result data = (Result) msg.obj;
+                    if (data != null && data.getIsshowwap().equals("1")){
+                        Intent intent = new Intent(MainActivity.this,WebViewActivity.class);
+                        intent.putExtra("url",data.getWapurl());
+                        startActivity(intent);
+                    }
+                    System.out.println(data);
                     break;
                 default:
                     break;
