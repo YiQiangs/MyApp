@@ -1,51 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.yiqiang.myapp">
+    package="cn.true123.lottery">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
-        android:name=".PushApplication"
+        android:name=".App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".ui.activities.MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".WebViewActivity"
-            />
+        <activity
+            android:name=".ui.activities.LotteryDetailActivity"
+            android:label="@string/title_activity_lottery_detail"
 
-        <receiver android:name="com.yiqiang.myapp.MyPushReceiver">
-            <intent-filter>
-                <action android:name="com.peng.one.push.ACTION_RECEIVE_NOTIFICATION" />
-                <action android:name="com.peng.one.push.ACTION_RECEIVE_NOTIFICATION_CLICK" />
-                <action android:name="com.peng.one.push.ACTION_RECEIVE_MESSAGE" />
-                <action android:name="com.peng.one.push.ACTION_RECEIVE_COMMAND_RESULT" />
-            </intent-filter>
-        </receiver>
-        <!--引入了one-push-库-->
-        <!--<meta-data-->
-            <!--android:name="OnePush_JPush_106"-->
-            <!--android:value="com.peng.one.push.jpush.JPushClient"/>-->
-        <!--如果引入了one-push-getui库-->
-        <!--<meta-data-->
-            <!--android:name="OnePush_GeTui_105"-->
-            <!--android:value="com.peng.one.push.getui.GeTuiPushClient"/>-->
+            android:theme="@style/AppTheme.NoActionBar">
 
-        <!--如果引入了one-push-getui库-->
-        <meta-data
-            android:name="OnePush_JPush_106"
-            android:value="com.peng.one.push.jpush.JPushClient"/>
-        <meta-data
-            android:name="JPUSH_CHANNEL"
-            android:value="developer-default"/>
-        <meta-data
-            android:name="JPUSH_APPKEY"
-            android:value="b79b05debf2f19b6237ff537"/>
+        </activity>
+        <activity
+            android:name=".ui.activities.NewsDetailActivity"
+            android:label="@string/title_activity_lottery_detail"
+
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+        <activity
+            android:name=".ui.activities.RuleActivity"
+            android:label="@string/title_activity_lottery_detail"
+
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+        <activity
+            android:name=".ui.activities.WebViewActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+
     </application>
 
 </manifest>
