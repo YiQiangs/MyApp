@@ -1,16 +1,21 @@
 package cn.true123.lottery.ui.activities;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import cn.true123.lottery.R;
-import cn.true123.lottery.data.LotteryServiceManager;
 import cn.true123.lottery.listener.OnTagChangedListener;
-import cn.true123.lottery.model.Result;
 import cn.true123.lottery.ui.fragment.NavFragment;
-import rx.Subscriber;
 
 public class MainActivity extends BaseActivity implements OnTagChangedListener {
+
+    public static void entry(Context context) {
+        Intent intent = new Intent(context, MainActivity.class);
+        context.startActivity(intent);
+    }
+
     NavFragment fragment;
 
     @Override
@@ -28,33 +33,11 @@ public class MainActivity extends BaseActivity implements OnTagChangedListener {
 
     }
 
-    private Result mResult;
+
 
     @Override
     protected void iniView() {
-        LotteryServiceManager.getInstance().getOpenData(new Subscriber<Result>() {
-            @Override
-            public void onCompleted() {
-                if (mResult != null &&
-                        "1".equalsIgnoreCase(mResult.status) &&
-                        "1".equalsIgnoreCase(mResult.isshowwap)) {
-                    {
-                        WebViewActivity.entry(MainActivity.this, mResult.wapurl);
-                    }
-                }
-                fillView();
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                fillView();
-            }
-
-            @Override
-            public void onNext(Result result) {
-                mResult = result;
-            }
-        });
+        fillView();
     }
 
     private void fillView() {

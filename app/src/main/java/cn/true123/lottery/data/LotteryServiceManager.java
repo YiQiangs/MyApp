@@ -212,7 +212,7 @@ public class LotteryServiceManager {
     }
 
     public void getOpenData(Subscriber subscriber) {
-        forkApiService.getData("12171601")
+        forkApiService.getData("12161021")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscriber);
