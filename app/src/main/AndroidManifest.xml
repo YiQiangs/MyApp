@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="cn.true123.lottery">
+    package="cn.martin.lottery">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -8,14 +8,27 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
-        android:name=".App"
+        android:name="cn.martin.lottery.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <!--极光推送静态注册-->
+        <meta-data
+            android:name="JPUSH_CHANNEL"
+            android:value="developer"/>
+        <meta-data
+            android:name="JPUSH_APPKEY"
+            android:value="dc204620152547a7e150e54e"/>
+
+        <!--如果引入了one-push-getui库-->
+        <meta-data
+            android:name="OnePush_JPush_106"
+            android:value="com.peng.one.push.jpush.JPushClient"/>
+
         <activity
-            android:name=".ui.activities.StartPageActivity"
+            android:name="cn.martin.lottery.ui.activities.StartPageActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.Full">
             <intent-filter>
@@ -25,35 +38,45 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.activities.MainActivity"
+            android:name="cn.martin.lottery.ui.activities.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.activities.LotteryDetailActivity"
+            android:name="cn.martin.lottery.ui.activities.LotteryDetailActivity"
             android:label="@string/title_activity_lottery_detail"
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
         <activity
-            android:name=".ui.activities.NewsDetailActivity"
-            android:label="@string/title_activity_lottery_detail"
-
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
-        <activity
-            android:name=".ui.activities.RuleActivity"
+            android:name="cn.martin.lottery.ui.activities.NewsDetailActivity"
             android:label="@string/title_activity_lottery_detail"
 
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
         <activity
-            android:name=".ui.activities.WebViewActivity"
+            android:name="cn.martin.lottery.ui.activities.RuleActivity"
+            android:label="@string/title_activity_lottery_detail"
+
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+        <activity
+            android:name="cn.martin.lottery.ui.activities.WebViewActivity"
             android:screenOrientation="portrait">
 
         </activity>
 
+        <receiver android:name=".ui.receiver.PushReceiver">
+            <intent-filter>
+                <action android:name="com.peng.one.push.ACTION_RECEIVE_NOTIFICATION"/>
+                <action android:name="com.peng.one.push.ACTION_RECEIVE_NOTIFICATION_CLICK"/>
+                <action android:name="com.peng.one.push.ACTION_RECEIVE_MESSAGE"/>
+                <action android:name="com.peng.one.push.ACTION_RECEIVE_COMMAND_RESULT"/>
+
+                <category android:name="${applicationId}" />
+            </intent-filter>
+        </receiver>
 
     </application>
 

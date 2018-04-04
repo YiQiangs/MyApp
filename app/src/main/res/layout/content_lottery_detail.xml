@@ -50,7 +50,7 @@
         </LinearLayout>
     </LinearLayout>
 
-    <cn.true123.lottery.widget.KJLineItemView
+    <cn.martin.lottery.widget.KJLineItemView
         android:id="@+id/view_detail_ball"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
@@ -71,7 +71,7 @@
             android:layout_height="wrap_content" />
     </LinearLayout>
 
-    <cn.true123.lottery.widget.LotteryDetailView
+    <cn.martin.lottery.widget.LotteryDetailView
         android:id="@+id/detail_detail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

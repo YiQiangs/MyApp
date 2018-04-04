@@ -1,24 +1,28 @@
 apply plugin: 'com.android.application'
-apply plugin: 'android-apt'
+apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'com.jakewharton.butterknife'
 android {
     compileSdkVersion 24
     buildToolsVersion "25.0.0"
 
     defaultConfig {
-        applicationId "cn.martin.mao.lottery"
+        applicationId "cn.martin.lottery"
         minSdkVersion 14
         targetSdkVersion 22
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
@@ -27,7 +31,9 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:24.2.1'
+
+    //noinspection GradleCompatible
+    compile 'com.android.support:appcompat-v7:25+'
     compile 'com.android.support:design:24.2.1'
     testCompile 'junit:junit:4.12'
 
@@ -40,7 +46,12 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.0.0'
     compile 'com.jakewharton:butterknife:8.4.0'
-    apt 'com.jakewharton:butterknife-compiler:8.4.0'
+//    apt 'com.jakewharton:butterknife-compiler:8.4.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
+
+    compile 'com.peng.library:one-push-core:1.2.3'
+    compile 'com.peng.library:one-push-jpush:1.2.3'
+    compile 'com.jakewharton:butterknife:8.4.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
 
 }
